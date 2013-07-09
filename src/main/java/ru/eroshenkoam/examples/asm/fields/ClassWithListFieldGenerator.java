@@ -43,7 +43,7 @@ public class ClassWithListFieldGenerator {
         constructor.visitMethodInsn(INVOKESPECIAL, getInternalName(ArrayList.class), "<init>", "()V");
         constructor.visitFieldInsn(PUTFIELD, "Items", "ids", getDescriptor(List.class));
         constructor.visitInsn(RETURN);
-        constructor.visitMaxs(1, 1);
+        constructor.visitMaxs(4, 2);
         constructor.visitEnd();
 
 //        Method constructorMethod = Method.getMethod("void <init> ()");
