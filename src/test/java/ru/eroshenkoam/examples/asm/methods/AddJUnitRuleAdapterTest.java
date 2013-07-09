@@ -37,11 +37,10 @@ public class AddJUnitRuleAdapterTest {
 
         Class<?> jUnitTestClass = ASMUtilities.defineClass(JUnitTest.class.getName(), classWriter);
         Object jUnitTest = jUnitTestClass.newInstance();
-        Field field = jUnitTestClass.getField(AddJUnitRuleAdapter.JUNIT_RULE_FIELD_NAME);
-        assertThat(field.getType(), equalTo(AddJUnitRuleAdapter.JUNIT_RULE_CLASS));
-        assertThat(field.get(jUnitTest), notNullValue());
+        Field field = jUnitTestClass.getField(AddJUnitRuleAdapter.INJECTED_RULE_FIELD_NAME);
+        assertThat(field.getType(), equalTo(AddJUnitRuleAdapter.INJECTED_RULE_CLASS));
         assertThat(field.getAnnotation(Rule.class), instanceOf(Rule.class));
-
+        assertThat(field.get(jUnitTest), notNullValue());
     }
 
     public static class JUnitTest {

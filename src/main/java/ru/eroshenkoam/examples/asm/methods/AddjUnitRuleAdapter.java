@@ -16,9 +16,9 @@ import static org.objectweb.asm.Type.getInternalName;
  */
 public class AddJUnitRuleAdapter extends ClassVisitor {
 
-    public static final String JUNIT_RULE_FIELD_NAME = "testName";
+    public static final String INJECTED_RULE_FIELD_NAME = "testName";
 
-    public static final Class JUNIT_RULE_CLASS = TestName.class;
+    public static final Class INJECTED_RULE_CLASS = TestName.class;
 
     public String owner;
 
@@ -47,8 +47,8 @@ public class AddJUnitRuleAdapter extends ClassVisitor {
     @Override
     public void visitEnd() {
         if (!isInterface) {
-            FieldVisitor testName = cv.visitField(ACC_PUBLIC, JUNIT_RULE_FIELD_NAME,
-                    getDescriptor(JUNIT_RULE_CLASS), null, null);
+            FieldVisitor testName = cv.visitField(ACC_PUBLIC, INJECTED_RULE_FIELD_NAME,
+                    getDescriptor(INJECTED_RULE_CLASS), null, null);
             if (testName != null) {
                 testName.visitAnnotation(getDescriptor(Rule.class), true);
                 testName.visitEnd();
@@ -70,10 +70,10 @@ public class AddJUnitRuleAdapter extends ClassVisitor {
         public void visitInsn(int opcode) {
             if ((opcode >= IRETURN && opcode <= RETURN) || opcode == ATHROW) {
                 mv.visitVarInsn(ALOAD, 0);
-                mv.visitTypeInsn(NEW, getInternalName(JUNIT_RULE_CLASS));
+                mv.visitTypeInsn(NEW, getInternalName(INJECTED_RULE_CLASS));
                 mv.visitInsn(DUP);
-                mv.visitMethodInsn(INVOKESPECIAL, getInternalName(JUNIT_RULE_CLASS), "<init>", "()V");
-                mv.visitFieldInsn(PUTFIELD, owner, JUNIT_RULE_FIELD_NAME, getDescriptor(JUNIT_RULE_CLASS));
+                mv.visitMethodInsn(INVOKESPECIAL, getInternalName(INJECTED_RULE_CLASS), "<init>", "()V");
+                mv.visitFieldInsn(PUTFIELD, owner, INJECTED_RULE_FIELD_NAME, getDescriptor(INJECTED_RULE_CLASS));
             }
             mv.visitInsn(opcode);
         }
