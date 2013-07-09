@@ -22,8 +22,8 @@ public class AddTimerAdapter extends ClassVisitor {
     @Override
     public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
         cv.visit(version, access, name, signature, superName, interfaces);
-        owner = name;
         isInterface = (access & ACC_INTERFACE) != 0;
+        owner = name;
     }
 
     @Override
