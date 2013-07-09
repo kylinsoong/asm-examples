@@ -14,6 +14,7 @@ public class ASMUtilitiesTest {
 
     @Test
     public void testOutput() {
+        System.out.println(Type.getDescriptor(int.class));
         System.out.println(Type.getDescriptor(Object.class));
         System.out.println(Type.getInternalName(Object.class));
 
