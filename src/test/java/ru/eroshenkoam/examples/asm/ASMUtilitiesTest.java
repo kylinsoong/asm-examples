@@ -19,10 +19,5 @@ public class ASMUtilitiesTest {
 
     }
 
-    @Test
-    public void testClassDescriptorGetter() throws Exception {
-        Class<?> helloWorldClass = HelloWorldClassGenerator.generateHelloWorldClassViaGeneratorAdapter("Hello, World!");
-        helloWorldClass.getMethods()[0].invoke(null, new Object[]{null});
-    }
 
 }
