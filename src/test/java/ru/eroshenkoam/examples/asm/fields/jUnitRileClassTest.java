@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * @author Artem Eroshenko eroshenkoam
@@ -15,9 +16,10 @@ public class jUnitRileClassTest {
     public void testOutput () throws Exception {
         Class<?> itemsClass = JUnitRuleClassGenerator.generateClassWithJUnitRule();
         Object items = itemsClass.newInstance();
-        Field field = itemsClass.getDeclaredField("testName");
-        System.out.println(field.isAnnotationPresent(Rule.class));
-        System.out.println(field.get(items));
+        for (Field field : itemsClass.getDeclaredFields()) {
+            System.out.println(Arrays.asList(field.getDeclaredAnnotations()));
+            System.out.println(field.get(items));
+        }
     }
 
 }

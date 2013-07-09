@@ -1,6 +1,8 @@
 package ru.eroshenkoam.examples.asm.fields;
 
+import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import org.junit.rules.TestName;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
@@ -26,9 +28,29 @@ public class JUnitRuleClassGenerator {
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classWriter.visit(V1_6, ACC_PUBLIC, CLASS_NAME, null, getInternalName(Object.class), null);
 
+        classWriter.visitField(ACC_PUBLIC + ACC_STATIC, "folder", getDescriptor(TemporaryFolder.class), null, null).
+                visitAnnotation(getDescriptor(ClassRule.class), true).
+                visitEnd();
+
         classWriter.visitField(ACC_PUBLIC, "testName", getDescriptor(TestName.class), null, null).
                 visitAnnotation(getDescriptor(Rule.class), true).
                 visitEnd();
+
+        MethodVisitor staticConstructor = classWriter.visitMethod(
+                ACC_STATIC,
+                "<clinit>",
+                "()V",
+                null,
+                null);
+
+        staticConstructor.visitCode();
+        staticConstructor.visitTypeInsn(NEW, getInternalName(TemporaryFolder.class));
+        staticConstructor.visitInsn(DUP);
+        staticConstructor.visitMethodInsn(INVOKESPECIAL, getInternalName(TemporaryFolder.class), "<init>", "()V");
+        staticConstructor.visitFieldInsn(PUTSTATIC, CLASS_NAME, "folder", getDescriptor(TemporaryFolder.class));
+        staticConstructor.visitInsn(RETURN);
+        staticConstructor.visitMaxs(3, 1);
+        staticConstructor.visitEnd();
 
         MethodVisitor constructor = classWriter.visitMethod(
                 ACC_PUBLIC,
@@ -36,6 +58,7 @@ public class JUnitRuleClassGenerator {
                 "()V",
                 null,
                 null);
+        constructor.visitCode();
         constructor.visitVarInsn(ALOAD, 0);
         constructor.visitMethodInsn(INVOKESPECIAL, getInternalName(Object.class), "<init>", "()V");
         constructor.visitVarInsn(ALOAD, 0);
