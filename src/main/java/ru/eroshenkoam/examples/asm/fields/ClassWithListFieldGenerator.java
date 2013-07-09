@@ -2,9 +2,6 @@ package ru.eroshenkoam.examples.asm.fields;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Type;
-import org.objectweb.asm.commons.GeneratorAdapter;
-import org.objectweb.asm.commons.Method;
 import ru.eroshenkoam.examples.asm.ASMUtilities;
 
 import java.util.ArrayList;
@@ -45,18 +42,6 @@ public class ClassWithListFieldGenerator {
         constructor.visitInsn(RETURN);
         constructor.visitMaxs(4, 2);
         constructor.visitEnd();
-
-//        Method constructorMethod = Method.getMethod("void <init> ()");
-//        GeneratorAdapter constructor = new GeneratorAdapter(ACC_PUBLIC, constructorMethod, null, null, classWriter);
-//        constructor.loadThis();
-//        constructor.invokeConstructor(Type.getType(Object.class), constructorMethod);
-//        constructor.newInstance(Type.getType(ArrayList.class));
-//        constructor.dup();
-//        constructor.invokeConstructor(Type.getType(ArrayList.class), constructorMethod);
-//        constructor.putField(Type.getType("LItems;"), "ids", Type.getType(List.class));
-//        constructor.returnValue();
-//        constructor.endMethod();
-
 
         return ASMUtilities.defineClass(CLASS_NAME, classWriter);
     }

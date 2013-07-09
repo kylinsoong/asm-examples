@@ -1,7 +1,5 @@
 package ru.eroshenkoam.examples.asm;
 
-import org.objectweb.asm.ClassWriter;
-
 /**
  * @author Artem Eroshenko eroshenkoam
  *         7/8/13, 7:58 PM

@@ -8,9 +8,6 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import ru.eroshenkoam.examples.asm.ASMUtilities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.objectweb.asm.Opcodes.*;
 import static org.objectweb.asm.Type.getDescriptor;
 import static org.objectweb.asm.Type.getInternalName;

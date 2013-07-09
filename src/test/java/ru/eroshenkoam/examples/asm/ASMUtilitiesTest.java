@@ -2,9 +2,6 @@ package ru.eroshenkoam.examples.asm;
 
 import org.junit.Test;
 import org.objectweb.asm.Type;
-import ru.eroshenkoam.examples.asm.helloworld.HelloWorldClassGenerator;
-
-import java.lang.reflect.Method;
 
 /**
  * @author Artem Eroshenko eroshenkoam
