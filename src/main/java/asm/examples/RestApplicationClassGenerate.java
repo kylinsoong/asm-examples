@@ -127,6 +127,8 @@ public class RestApplicationClassGenerate {
         
         Object obj = cls.newInstance();
         
+        System.out.println(obj);
+        
         for(Constructor o : cls.getConstructors()) {
             System.out.println(o);
         }
